@@ -16,8 +16,8 @@ import (
 // Same limits as the app's ZIP installer.
 const (
 	maxEntries   = 5000
-	maxFileBytes = 32 << 20
-	maxTotal     = 128 << 20
+	maxFileBytes = 256 << 20
+	maxTotal     = 1024 << 20
 )
 
 var drivePrefix = regexp.MustCompile(`^[A-Za-z]:`)
