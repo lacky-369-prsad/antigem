@@ -1,0 +1,29 @@
+name: Debug Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build
+        run: |
+          chmod +x gradlew scripts/build_all_apks.sh
+          ./scripts/build_all_apks.sh || ./gradlew assembleTermuxDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: antigem-apk
+          path: |
+            output/**
+            build/outputs/apk_all/**
+            app/build/outputs/apk/**/*.apk
